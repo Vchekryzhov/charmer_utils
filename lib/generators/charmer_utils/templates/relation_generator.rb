@@ -29,15 +29,15 @@ module #{file_name.camelcase}able
     has_one :#{file_name.underscore}_relation, as: :#{file_name.underscore}able, dependent: :destroy, inverse_of: :#{file_name.underscore}able
     has_one :#{file_name.underscore.singularize}, through: :#{file_name.underscore}_relation
 
-    def #{file_name.camelcase.singularize}=(val)
+    def #{file_name.underscore.singularize}=(val)
       if val.is_a?(Integer)
-        self.#{file_name.camelcase.singularize} = #{file_name.camelcase}.find(val)
+        self.#{file_name.underscore.singularize} = #{file_name.camelcase}.find(val)
       else
         super
       end
     end
 
-    def #{file_name.camelcase.singularize}_ids=(val)
+    def #{file_name.underscore.singularize}_ids=(val)
       ActiveRecord::Base.transaction do
         #{file_name.underscore}_relations.destroy_all
         super(val)

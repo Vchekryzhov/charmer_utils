@@ -9,7 +9,7 @@
 #  deleted_at :datetime
 #
 
-class CharmerUtils::TeamRole < ApplicationRecord
+class TeamRole < ApplicationRecord
 
   has_many :admins, dependent: :restrict_with_error
 

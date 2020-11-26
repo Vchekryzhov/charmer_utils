@@ -1,6 +1,6 @@
 require 'active_support/concern'
 
-module CharmerUtil::Publishable
+module CharmerUtils::Publishable
   extend ActiveSupport::Concern
 
   included do

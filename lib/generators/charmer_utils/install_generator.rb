@@ -1,7 +1,7 @@
 require 'rails/generators'
 require File.expand_path('utils', __dir__)
 
-module CharmerAdmin
+module CharmerUtils
   class InstallGenerator < Rails::Generators::Base
     source_root File.expand_path('templates', __dir__)
     include Generators::Utils::InstanceMethods
@@ -22,6 +22,14 @@ module CharmerAdmin
       template('admin_serializer.rb', 'app/serializers/admin_serializer.rb')
       template('seeds.rb', 'db/seeds.rb')
       template('relation_generator.rb', 'lib/generators/relation_generator.rb')
+      template('admin_entity.rake', 'lib/tasks/admin_entity.rake')
+      template('create_relation.rb', 'app/models/ability/create_relation.rb')
+      template('crud_relation.rb', 'app/models/ability/crud_relation.rb')
+      template('delete_relation.rb', 'app/models/ability/delete_relation.rb')
+      template('update_relation.rb', 'app/models/ability/update_relation.rb')
+      template('read_relation.rb', 'app/models/ability/read_relation.rb')
+      template('team_role.rb', 'app/models/team_role.rb')
+      template('entity.rb', 'app/models/entity.rb')
     end
   end
 end

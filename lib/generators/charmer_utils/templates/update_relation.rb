@@ -10,7 +10,7 @@
 #  deleted_at   :datetime
 #
 
-class CharmerUtils::Ability::UpdateRelation < ApplicationRecord
+class Ability::UpdateRelation < ApplicationRecord
   belongs_to :team_role
   belongs_to :entity
 end

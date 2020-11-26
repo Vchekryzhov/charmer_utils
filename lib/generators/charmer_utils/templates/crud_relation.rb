@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: create_relations
+# Table name: crud_relations
 #
 #  id           :bigint(8)        not null, primary key
 #  entity_id    :bigint(8)
@@ -10,7 +10,7 @@
 #  deleted_at   :datetime
 #
 
-class CharmerUtils::Ability::CreateRelation < ApplicationRecord
+class Ability::CrudRelation < ApplicationRecord
   belongs_to :team_role
   belongs_to :entity
 end

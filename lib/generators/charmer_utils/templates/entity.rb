@@ -10,7 +10,7 @@
 #  deleted_at :datetime
 #
 
-class CharmerUtils::Entity < ApplicationRecord
+class Entity < ApplicationRecord
     Rails.application.eager_load!
     MODELS = ApplicationRecord.descendants.map(&:name)
     extend Enumerize

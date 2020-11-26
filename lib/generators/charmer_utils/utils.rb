@@ -1,4 +1,4 @@
-module CharmerAdmin
+module CharmerUtils
   module Generators
     module Utils
       module InstanceMethods

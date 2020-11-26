@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: delete_relations
+# Table name: create_relations
 #
 #  id           :bigint(8)        not null, primary key
 #  entity_id    :bigint(8)
@@ -10,7 +10,7 @@
 #  deleted_at   :datetime
 #
 
-class CharmerUtils::Ability::DeleteRelation < ApplicationRecord
+class Ability::CreateRelation < ApplicationRecord
   belongs_to :team_role
   belongs_to :entity
 end

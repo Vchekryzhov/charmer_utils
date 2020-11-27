@@ -1,0 +1,113 @@
+CharmerAdmin.config do |config|
+
+  config.admin_model 'Admin'
+  config.set_csrf_mode(false)
+  config.admin_serializer 'AdminSerializer'
+  case Rails.env
+  when 'development'
+    config.set_cookies_domain('domain')
+  when 'staging'
+    config.set_cookies_domain('.domain')
+  when 'production'
+    config.set_cookies_domain('.domain')
+  end
+
+  config.set_time_zone(Proc.new do |controller|
+    controller.current_user.timezone
+  end)
+
+
+  config.additional_attributes_for(:create, Proc.new do |controller|
+    out = {}
+    out[:admin_ids] = [controller.current_user.id] if controller.model.method_defined?(:admin_ids=)
+    out
+  end)
+
+  config.additional_attributes_for(:update, Proc.new do |controller|
+    out = {}
+    out
+  end)
+
+  config.settings_overrider(Proc.new do |controller|
+    {
+      autosave: true,
+      short_date: I18n.t(:short, scope: [:charmer_admin, :dates], default: 'dd.MM.yyyy'),
+      long_date: I18n.t(:long, scope: [:charmer_admin, :dates], default: 'd MMMM, HH:mm'),
+      typograph: controller.region.code == 'ru'
+    }
+  end)
+
+  config.dashboard_scope(Proc.new do |controller|
+    []
+  end)
+
+
+  config.model 'Admin' do
+
+    list do
+      field :id
+      field :name, searchable: true
+      field :email, searchable: true
+      field :team_role
+    end
+
+    show do
+      field :id
+      field :name
+      field :email
+      field :password, editable: true
+      field :team_role_id
+      field :timezone
+      field :created_at, visible: false
+      field :updated_at, visible: false
+    end
+
+    permit do
+      params = [:name, :email, :password,
+                :timezone, :team_role_id]
+      edit params
+      create params
+    end
+  end
+
+  config.model 'CharmerUtils::TeamRole' do
+
+      list do
+        field :id
+        field :title
+      end
+
+      show do
+        field :id
+        field :title
+        field :special
+        field :super_admin
+        field :crud_entities
+        field :create_entities
+        field :read_entities
+        field :update_entities
+        field :delete_entities
+      end
+
+      permit do
+        params = [:title, :super_admin, :special, crud_entity_ids: [], read_entity_ids: [],
+                  create_entity_ids: [], update_entity_ids: [], delete_entity_ids: []]
+        create params
+        edit params
+      end
+    end
+
+
+  config.menu do
+    allow_settings false
+    allow_robots false
+
+    group 'settings' do
+      entity 'Admin', title: 'Администраторы'
+      entity 'TeamRole', title: 'Роли администраторов'
+      entity 'CharmerAdmin::Settings'
+      entity 'CharmerAdmin::Robot'
+    end
+
+  end
+end
